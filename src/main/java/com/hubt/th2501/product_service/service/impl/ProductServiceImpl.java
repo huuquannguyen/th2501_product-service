@@ -6,8 +6,12 @@ import com.hubt.th2501.product_service.model.request.CreateProductRequest;
 import com.hubt.th2501.product_service.model.request.SizeRequest;
 import com.hubt.th2501.product_service.repository.ProductRepository;
 import com.hubt.th2501.product_service.service.ProductService;
+import com.hubt.th2501.product_service.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +20,8 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
-    public Product createProduct(CreateProductRequest request) {
+    @Transactional
+    public Product createProduct(CreateProductRequest request) throws IOException {
         Product product = new Product();
         product.setName(request.getName());
         product.setCategory(request.getCategory().getCategory());
@@ -32,6 +37,10 @@ public class ProductServiceImpl implements ProductService {
             size.setProduct(product);
             product.getSizes().add(size);
         }
-        return productRepository.save(product);
+        productRepository.save(product);
+        String imageName = FileUploadUtil.saveFile(product.getId(), request.getImage());
+        product.setImageName(imageName);
+        productRepository.save(product);
+        return product;
     }
 }

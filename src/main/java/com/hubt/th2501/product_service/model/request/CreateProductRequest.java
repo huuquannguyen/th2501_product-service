@@ -34,5 +34,5 @@ public class CreateProductRequest {
 
     private String description;
 
-//    private MultipartFile image;
+    private MultipartFile image;
 }
