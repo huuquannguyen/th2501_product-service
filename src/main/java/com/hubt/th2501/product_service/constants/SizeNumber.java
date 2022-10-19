@@ -1,4 +1,4 @@
-package com.hubt.th2501.product_service.model.constants;
+package com.hubt.th2501.product_service.constants;
 
 public class SizeNumber {
 

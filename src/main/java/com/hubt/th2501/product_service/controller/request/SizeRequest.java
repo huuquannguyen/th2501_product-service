@@ -1,8 +1,8 @@
-package com.hubt.th2501.product_service.model.request;
+package com.hubt.th2501.product_service.controller.request;
 
-import com.hubt.th2501.product_service.model.constants.ProductStatus;
-import com.hubt.th2501.product_service.model.constants.SizeCharacter;
-import com.hubt.th2501.product_service.model.constants.SizeNumber;
+import com.hubt.th2501.product_service.constants.ProductStatus;
+import com.hubt.th2501.product_service.constants.SizeCharacter;
+import com.hubt.th2501.product_service.constants.SizeNumber;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

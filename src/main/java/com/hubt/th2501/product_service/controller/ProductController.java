@@ -1,7 +1,9 @@
 package com.hubt.th2501.product_service.controller;
 
 import com.hubt.th2501.product_service.entity.Product;
-import com.hubt.th2501.product_service.model.request.CreateProductRequest;
+import com.hubt.th2501.product_service.controller.request.CreateProductRequest;
+import com.hubt.th2501.product_service.exception.ApiException;
+import com.hubt.th2501.product_service.model.ApiResponse;
 import com.hubt.th2501.product_service.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -19,10 +21,9 @@ public class ProductController {
 
     @PostMapping(path = "/product/create", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Product> createProduct(@ModelAttribute CreateProductRequest createProductRequest,
-                                                 @RequestParam MultipartFile image) throws IOException {
-
-        return ResponseEntity.ok().body(productService.createProduct(createProductRequest));
+    public ApiResponse<Product> createProduct(@ModelAttribute CreateProductRequest createProductRequest,
+                                              @RequestParam MultipartFile image) throws IOException, ApiException {
+        return ApiResponse.successWithResult(productService.createProduct(createProductRequest));
     }
 
 }

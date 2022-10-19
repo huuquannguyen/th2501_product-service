@@ -2,8 +2,9 @@ package com.hubt.th2501.product_service.service.impl;
 
 import com.hubt.th2501.product_service.entity.Product;
 import com.hubt.th2501.product_service.entity.Size;
-import com.hubt.th2501.product_service.model.request.CreateProductRequest;
-import com.hubt.th2501.product_service.model.request.SizeRequest;
+import com.hubt.th2501.product_service.controller.request.CreateProductRequest;
+import com.hubt.th2501.product_service.controller.request.SizeRequest;
+import com.hubt.th2501.product_service.exception.ApiException;
 import com.hubt.th2501.product_service.repository.ProductRepository;
 import com.hubt.th2501.product_service.service.ProductService;
 import com.hubt.th2501.product_service.util.FileUploadUtil;
@@ -21,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public Product createProduct(CreateProductRequest request) throws IOException {
+    public Product createProduct(CreateProductRequest request) throws ApiException, IOException {
         Product product = new Product();
         product.setName(request.getName());
         product.setCategory(request.getCategory().getCategory());
@@ -38,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
             product.getSizes().add(size);
         }
         productRepository.save(product);
-        String imageName = FileUploadUtil.saveFile(product.getId(), request.getImage());
+        String imageName = FileUploadUtil.uploadImage(product.getId(), request.getImage());
         product.setImageName(imageName);
         productRepository.save(product);
         return product;
