@@ -24,5 +24,5 @@ public class Size {
 
     private int quantity;
 
-    private String status;
+    private int inStore;
 }

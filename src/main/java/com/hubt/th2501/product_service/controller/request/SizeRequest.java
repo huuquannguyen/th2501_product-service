@@ -1,6 +1,5 @@
 package com.hubt.th2501.product_service.controller.request;
 
-import com.hubt.th2501.product_service.constants.ProductStatus;
 import com.hubt.th2501.product_service.constants.SizeCharacter;
 import com.hubt.th2501.product_service.constants.SizeNumber;
 import lombok.AllArgsConstructor;
@@ -24,7 +23,4 @@ public class SizeRequest {
 
     @NotNull(message = "Quantity must not be null")
     private Integer quantity;
-
-    @NotNull(message = "Status must not be null")
-    private ProductStatus status;
 }

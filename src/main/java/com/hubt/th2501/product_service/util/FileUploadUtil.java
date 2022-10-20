@@ -15,10 +15,12 @@ import java.nio.file.StandardCopyOption;
 public class FileUploadUtil {
     public static String uploadImage(Long productId, MultipartFile file) throws ApiException, IOException {
         Path uploadPath = Paths.get("files-upload/product-image");
+        String fileName = file.getOriginalFilename();
+        String fileExtension = fileName.substring(fileName.lastIndexOf("."));
         if(!Files.exists(uploadPath)){
             Files.createDirectories(uploadPath);
         }
-        Path filePath = uploadPath.resolve("product-" + productId);
+        Path filePath = uploadPath.resolve("product-" + productId + fileExtension);
         try(InputStream inputStream = file.getInputStream()){
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         }catch (IOException e){
