@@ -1,5 +1,7 @@
 package com.hubt.th2501.product_service.controller;
 
+import com.hubt.th2501.product_service.controller.request.MoveToStoreRequest;
+import com.hubt.th2501.product_service.controller.response.MoveToStoreResponse;
 import com.hubt.th2501.product_service.entity.Product;
 import com.hubt.th2501.product_service.controller.request.CreateProductRequest;
 import com.hubt.th2501.product_service.exception.ApiException;
@@ -32,6 +34,18 @@ public class ProductController {
                                                   @RequestParam(required = false) String sort,
                                                   @RequestParam(required = false, defaultValue = "20") Integer limit){
         return ApiResponse.successWithResult(productService.getAllProducts(page, sort, limit).getContent());
+    }
+
+    @GetMapping("products/in_store")
+    public ApiResponse<List<Product>> getInStoreProducts(@RequestParam(required = false, defaultValue = "0") Integer page,
+                                                         @RequestParam(required = false) String sort,
+                                                         @RequestParam(required = false, defaultValue = "20") Integer limit){
+        return ApiResponse.successWithResult(productService.getAllInStoreProducts(page, sort, limit).getContent());
+    }
+
+    @PutMapping("products/move")
+    public ApiResponse<MoveToStoreResponse> moveToStore(@RequestBody List<MoveToStoreRequest> requests){
+        return ApiResponse.successWithResult(productService.moveProductToStore(requests));
     }
 
 }
