@@ -105,7 +105,6 @@ public class ProductServiceImpl implements ProductService {
                 if(size.getQuantity() < sizeRequest.getQuantity()){
                     failureReasons.add("Size " + requestSize + " does not have enough quantity.");
                 } else {
-                    size.setQuantity(size.getQuantity() - sizeRequest.getQuantity());
                     size.setInStore(size.getInStore() + sizeRequest.getQuantity());
                     movedSuccessProduct.getSizes().add(sizeRequest);
                 }

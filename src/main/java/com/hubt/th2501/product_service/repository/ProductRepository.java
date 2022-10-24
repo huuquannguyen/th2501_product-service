@@ -12,7 +12,20 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<Product> findById(Long id);
 
-    @Query("from Product p inner join Size s on p.id = s.id where s.inStore > 0")
+    @Query("select new com.hubt.th2501.product_service.controller.response.GetProductInStoreResponse(" +
+            " p.id," +
+            " p.name," +
+            " p.category," +
+            " p.subject," +
+            " p.price," +
+            " p.sold," +
+            " p.description," +
+            " p.imageName," +
+            " s.size," +
+            " s.quantity," +
+            " s.inStore) " +
+            "from Product p inner join Size s " +
+            "on p.id = s.product.id where s.inStore > 0")
     Page<Product> findInStoreProducts(Pageable pageable);
 
 }
