@@ -29,7 +29,6 @@ public class CreateProductRequest {
     @NotNull(message = "Product price must not be null.")
     private Double price;
 
-    @Valid
     private List<SizeRequest> sizes;
 
     private String description;

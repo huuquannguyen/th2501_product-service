@@ -1,5 +1,6 @@
 package com.hubt.th2501.product_service.service.impl;
 
+import com.hubt.th2501.product_service.constants.ErrorCode;
 import com.hubt.th2501.product_service.controller.request.MoveToStoreRequest;
 import com.hubt.th2501.product_service.controller.response.MoveFailedResponse;
 import com.hubt.th2501.product_service.controller.response.MoveToStoreResponse;
@@ -39,14 +40,11 @@ public class ProductServiceImpl implements ProductService {
         product.setPrice(request.getPrice());
         product.setSubject(request.getSubject().getSubject());
         product.setDescription(request.getDescription());
-        for (SizeRequest sizeRequest : request.getSizes()){
-            Size size = new Size();
-            size.setSize(sizeRequest.getSizeNumber() == null ? sizeRequest.getSizeCharacter().getCode() :
-                    String.valueOf(sizeRequest.getSizeNumber()));
-            size.setQuantity(sizeRequest.getQuantity());
+        List<Size> sizes = getSizesFromRequest(request.getSizes());
+        for(Size size : sizes){
             size.setProduct(product);
-            product.getSizes().add(size);
         }
+        product.setSizes(sizes);
         productRepository.save(product);
         if(request.getImage() != null){
             String imageName = FileUploadUtil.uploadImage(product.getId(), request.getImage());
@@ -121,5 +119,22 @@ public class ProductServiceImpl implements ProductService {
         if(failureReasons.size() > 0){
             response.getMoveFailed().add(new MoveFailedResponse(request, failureReasons));
         }
+    }
+
+    private List<Size> getSizesFromRequest(List<SizeRequest> sizeRequests) throws ApiException {
+        List<Size> sizes = new ArrayList<>();
+        for (SizeRequest sizeRequest: sizeRequests) {
+            if((sizeRequest.getSizeNumber() != null && sizeRequest.getSizeCharacter() != null) ||
+                    (sizeRequest.getSizeNumber() == null && sizeRequest.getSizeCharacter() == null)){
+                throw new ApiException(ErrorCode.SIZE_REQUEST_NOT_VALID);
+            }else{
+                Size size = new Size();
+                size.setQuantity(sizeRequest.getQuantity());
+                size.setSize((Objects.isNull(sizeRequest.getSizeCharacter()) ? String.valueOf(sizeRequest.getSizeNumber()) :
+                        sizeRequest.getSizeCharacter().getCode()));
+                sizes.add(size);
+            }
+        }
+        return sizes;
     }
 }

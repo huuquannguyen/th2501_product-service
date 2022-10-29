@@ -26,7 +26,7 @@ public class Product {
     private double price;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Size> sizes = new ArrayList<>();
+    private List<Size> sizes;
 
     private int sold;
 
