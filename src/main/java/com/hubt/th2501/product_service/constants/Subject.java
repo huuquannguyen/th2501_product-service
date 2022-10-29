@@ -7,11 +7,11 @@ public enum Subject {
 
     MALE("male"),
     FEMALE("female"),
-    KID("kids");
+    KID("kid");
 
     private final String subject;
 
-    Subject(String subject){
+    Subject(String subject) {
         this.subject = subject;
     }
 }

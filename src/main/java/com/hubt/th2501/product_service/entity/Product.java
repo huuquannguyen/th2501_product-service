@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,5 +31,5 @@ public class Product {
 
     private String description;
 
-    private String imageName;
+    private String imageUrl;
 }
