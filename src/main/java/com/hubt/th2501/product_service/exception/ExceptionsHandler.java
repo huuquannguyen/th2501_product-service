@@ -21,7 +21,7 @@ public class ExceptionsHandler {
 
     private final Log logger = LogFactory.getLog(ExceptionsHandler.class);
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
     public ApiResponse<String> handleBindExceptions(BindException exception) {
         Map<String, String> errors = new HashMap<>();
@@ -33,7 +33,7 @@ public class ExceptionsHandler {
         return ApiResponse.failureWithCode("BAD_REQUEST", errors.toString());
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ApiResponse<String> handleValidationExceptions(MethodArgumentNotValidException exception) {
         Map<String, String> errors = new HashMap<>();

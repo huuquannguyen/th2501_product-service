@@ -10,6 +10,8 @@ import com.hubt.th2501.product_service.controller.response.MoveToStoreResponse;
 import com.hubt.th2501.product_service.entity.Product;
 import com.hubt.th2501.product_service.entity.Size;
 import com.hubt.th2501.product_service.exception.ApiException;
+import com.hubt.th2501.product_service.model.ProductSpecification;
+import com.hubt.th2501.product_service.model.SearchCriteria;
 import com.hubt.th2501.product_service.repository.ProductRepository;
 import com.hubt.th2501.product_service.service.ProductService;
 import com.hubt.th2501.product_service.util.FileUploadUtil;
@@ -163,6 +165,13 @@ public class ProductServiceImpl implements ProductService {
         }
         productRepository.delete(product);
         return id;
+    }
+
+    @Override
+    public Page<Product> searchProduct(Integer page, String sort, Integer limit, List<SearchCriteria> criteriaList) {
+        Pageable pageable = pagination(page, sort, limit);
+        ProductSpecification specification = new ProductSpecification(criteriaList);
+        return productRepository.findAll(specification, pageable);
     }
 
     private Pageable pagination(Integer page, String order, Integer limit) {

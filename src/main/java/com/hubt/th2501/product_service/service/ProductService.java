@@ -6,6 +6,7 @@ import com.hubt.th2501.product_service.controller.request.UpdateProductRequest;
 import com.hubt.th2501.product_service.controller.response.MoveToStoreResponse;
 import com.hubt.th2501.product_service.entity.Product;
 import com.hubt.th2501.product_service.exception.ApiException;
+import com.hubt.th2501.product_service.model.SearchCriteria;
 import org.springframework.data.domain.Page;
 
 import java.io.IOException;
@@ -24,4 +25,6 @@ public interface ProductService {
     Product updateProduct(Long id, UpdateProductRequest request) throws ApiException, IOException;
 
     Long deleteProduct(Long id) throws ApiException;
+
+    Page<Product> searchProduct(Integer page, String sort, Integer limit, List<SearchCriteria> criteriaList);
 }
