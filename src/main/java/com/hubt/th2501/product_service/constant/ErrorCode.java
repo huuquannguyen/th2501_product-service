@@ -1,4 +1,4 @@
-package com.hubt.th2501.product_service.constants;
+package com.hubt.th2501.product_service.constant;
 
 import lombok.Getter;
 

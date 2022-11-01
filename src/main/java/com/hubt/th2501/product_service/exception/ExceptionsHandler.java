@@ -1,6 +1,6 @@
 package com.hubt.th2501.product_service.exception;
 
-import com.hubt.th2501.product_service.constants.ErrorCode;
+import com.hubt.th2501.product_service.constant.ErrorCode;
 import com.hubt.th2501.product_service.model.ApiResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

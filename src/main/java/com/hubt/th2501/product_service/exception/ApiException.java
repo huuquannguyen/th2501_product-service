@@ -1,6 +1,6 @@
 package com.hubt.th2501.product_service.exception;
 
-import com.hubt.th2501.product_service.constants.ErrorCode;
+import com.hubt.th2501.product_service.constant.ErrorCode;
 import lombok.Data;
 
 @Data

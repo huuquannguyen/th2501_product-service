@@ -1,6 +1,6 @@
 package com.hubt.th2501.product_service.model;
 
-import com.hubt.th2501.product_service.constants.SearchOperation;
+import com.hubt.th2501.product_service.constant.SearchOperation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package com.hubt.th2501.product_service.controller.request;
 
-import com.hubt.th2501.product_service.constants.SizeCharacter;
-import com.hubt.th2501.product_service.constants.SizeNumber;
+import com.hubt.th2501.product_service.constant.SizeCharacter;
+import com.hubt.th2501.product_service.constant.SizeNumber;
 import com.hubt.th2501.product_service.validation.annotation.SizeConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;

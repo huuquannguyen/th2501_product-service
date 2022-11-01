@@ -1,7 +1,7 @@
 package com.hubt.th2501.product_service.controller.request;
 
-import com.hubt.th2501.product_service.constants.Category;
-import com.hubt.th2501.product_service.constants.Subject;
+import com.hubt.th2501.product_service.constant.Category;
+import com.hubt.th2501.product_service.constant.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

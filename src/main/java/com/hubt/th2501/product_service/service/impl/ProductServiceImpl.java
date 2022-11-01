@@ -1,6 +1,6 @@
 package com.hubt.th2501.product_service.service.impl;
 
-import com.hubt.th2501.product_service.constants.ErrorCode;
+import com.hubt.th2501.product_service.constant.ErrorCode;
 import com.hubt.th2501.product_service.controller.request.CreateProductRequest;
 import com.hubt.th2501.product_service.controller.request.MoveToStoreRequest;
 import com.hubt.th2501.product_service.controller.request.SizeRequest;
