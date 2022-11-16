@@ -46,11 +46,13 @@ public class ExceptionsHandler {
     }
 
     @ExceptionHandler(value = ApiException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<String> handleError(HttpServletRequest req, ApiException e) {
         logger.error("Request " + req.getRequestURL() + " raised " + e);
         return ApiResponse.failureWithCode(e.getErrorCode(), e.getErrorMsg());
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = Exception.class)
     public ApiResponse<String> handleError(HttpServletRequest req, Exception e) {
         logger.error("Request " + req.getRequestURL() + " raised " + e);

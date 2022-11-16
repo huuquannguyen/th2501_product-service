@@ -16,6 +16,8 @@ public interface ProductService {
 
     Product createProduct(CreateProductRequest request) throws ApiException, IOException;
 
+    Product getOneProduct(Long id) throws ApiException;
+
     Page<Product> getAllProducts(Integer page, String sort, Integer limit);
 
     Page<Product> getAllInStoreProducts(Integer page, String sort, Integer limit);

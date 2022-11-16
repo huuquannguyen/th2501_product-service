@@ -56,12 +56,21 @@ public class ProductServiceImpl implements ProductService {
         }
         product.setSizes(sizes);
         productRepository.save(product);
-        if(request.getImage() != null){
+        if (request.getImage() != null) {
             String imageName = FileUploadUtil.uploadImage(product.getId(), request.getImage());
             product.setImageUrl(imageName);
             productRepository.save(product);
         }
         return product;
+    }
+
+    @Override
+    public Product getOneProduct(Long id) throws ApiException {
+        Optional<Product> optional = productRepository.findById(id);
+        if (optional.isEmpty()) {
+            throw new ApiException(ErrorCode.PRODUCT_NOT_FOUND);
+        }
+        return optional.get();
     }
 
     @Override
@@ -126,7 +135,7 @@ public class ProductServiceImpl implements ProductService {
             List<Size> requestSizes = getSizesFromRequest(request.getSizes());
             for (Size requestSize : requestSizes) {
                 for (Size size : product.getSizes()) {
-                    if (size.getSize().equals(requestSize.getSize())) {
+                    if (size.getSize().equals(requestSize.getSize()) && size.getColor().equals(requestSize.getColor())) {
                         size.setQuantity(requestSize.getQuantity());
                         size.setInStore(requestSize.getInStore());
                     } else {
@@ -135,6 +144,7 @@ public class ProductServiceImpl implements ProductService {
                         newSize.setSize(requestSize.getSize());
                         newSize.setQuantity(requestSize.getQuantity());
                         newSize.setInStore(requestSize.getInStore());
+                        newSize.setColor(requestSize.getColor());
                         product.getSizes().add(newSize);
                     }
                 }
@@ -146,7 +156,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (request.getImage() != null) {
-            FileUploadUtil.uploadImage(id, request.getImage());
+            product.setImageUrl(FileUploadUtil.uploadImage(id, request.getImage()));
         }
 
         return productRepository.save(product);
@@ -188,18 +198,23 @@ public class ProductServiceImpl implements ProductService {
         movedSuccessProduct.setProductId(request.getProductId());
         movedSuccessProduct.setSizes(new ArrayList<>());
         for (SizeRequest sizeRequest : request.getSizes()) {
-            String requestSize = sizeRequest.getSizeNumber() == null ? sizeRequest.getSizeCharacter().getCode() : String.valueOf(sizeRequest.getSizeNumber());
-            Optional<Size> optional = product.getSizes().stream().filter(s -> s.getSize().equals(requestSize)).findFirst();
+            String requestSize = sizeRequest.getSizeNumber() == null ? sizeRequest.getSizeCharacter().getCode() :
+                    String.valueOf(sizeRequest.getSizeNumber());
+            Optional<Size> optional = product.getSizes()
+                    .stream()
+                    .filter(s -> s.getSize().equals(requestSize) &&
+                            s.getColor().equals(sizeRequest.getColor().getColor()))
+                    .findFirst();
             if (optional.isPresent()) {
                 Size size = optional.get();
                 if (size.getQuantity() < sizeRequest.getQuantity()) {
-                    failureReasons.add("Size " + requestSize + " does not have enough quantity.");
+                    failureReasons.add("Size " + requestSize + " with color " + sizeRequest.getColor() + " does not have enough quantity.");
                 } else {
                     size.setInStore(size.getInStore() + sizeRequest.getQuantity());
                     movedSuccessProduct.getSizes().add(sizeRequest);
                 }
             } else {
-                failureReasons.add("Size " + requestSize + " does not exist.");
+                failureReasons.add("Size " + requestSize + " with color " + sizeRequest.getColor() + " does not exist.");
             }
         }
         if(movedSuccessProduct.getSizes().size() > 0){
@@ -220,6 +235,7 @@ public class ProductServiceImpl implements ProductService {
             size.setQuantity(sizeRequest.getQuantity());
             size.setSize((Objects.isNull(sizeRequest.getSizeCharacter()) ? String.valueOf(sizeRequest.getSizeNumber()) :
                     sizeRequest.getSizeCharacter().getCode()));
+            size.setColor(sizeRequest.getColor().getColor());
             sizes.add(size);
         }
         return sizes;

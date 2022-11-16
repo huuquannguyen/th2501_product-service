@@ -1,5 +1,6 @@
 package com.hubt.th2501.product_service.controller.request;
 
+import com.hubt.th2501.product_service.constant.Color;
 import com.hubt.th2501.product_service.constant.SizeCharacter;
 import com.hubt.th2501.product_service.constant.SizeNumber;
 import com.hubt.th2501.product_service.validation.annotation.SizeConstraint;
@@ -23,6 +24,9 @@ public class SizeRequest {
 
     private SizeCharacter sizeCharacter;
 
-    @NotNull(message = "Quantity must not be null")
+    @NotNull(message = "Color can not be null")
+    private Color color;
+
+    @NotNull(message = "Quantity can not be null")
     private Integer quantity;
 }

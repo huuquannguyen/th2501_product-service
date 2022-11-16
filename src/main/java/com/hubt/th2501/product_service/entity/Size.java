@@ -22,6 +22,8 @@ public class Size {
 
     private String size;
 
+    private String color;
+
     private int quantity;
 
     private int inStore;

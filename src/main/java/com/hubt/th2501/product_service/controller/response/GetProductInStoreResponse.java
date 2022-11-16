@@ -17,6 +17,7 @@ public class GetProductInStoreResponse {
     private String description;
     private String imageName;
     private String size;
+    private String color;
     private int quantity;
     private int inStore;
 }

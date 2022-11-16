@@ -23,6 +23,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
             " p.description," +
             " p.imageUrl," +
             " s.size," +
+            " s.color," +
             " s.quantity," +
             " s.inStore) " +
             "from Product p inner join Size s " +

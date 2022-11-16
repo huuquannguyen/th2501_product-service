@@ -35,6 +35,11 @@ public class ProductController {
         return ApiResponse.successWithResult(productService.createProduct(createProductRequest));
     }
 
+    @GetMapping("/products/{id}")
+    public ApiResponse<Product> getProduct(@PathVariable Long id) throws ApiException {
+        return ApiResponse.successWithResult(productService.getOneProduct(id));
+    }
+
     @GetMapping("/products")
     public ApiResponse<List<Product>> getProducts(@RequestParam(required = false, defaultValue = "0") Integer page,
                                                   @RequestParam(required = false) String sort,
