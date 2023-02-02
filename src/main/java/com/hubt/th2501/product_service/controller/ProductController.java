@@ -14,6 +14,7 @@ import com.hubt.th2501.product_service.model.SearchCriteria;
 import com.hubt.th2501.product_service.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.*;
@@ -30,17 +31,20 @@ public class ProductController {
 
     @PostMapping(path = "/products", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('user')")
     public ApiResponse<Product> createProduct(@Valid @ModelAttribute CreateProductRequest createProductRequest)
             throws IOException, ApiException {
         return ApiResponse.successWithResult(productService.createProduct(createProductRequest));
     }
 
     @GetMapping("/products/{id}")
+    @PreAuthorize("hasRole('user')")
     public ApiResponse<Product> getProduct(@PathVariable Long id) throws ApiException {
         return ApiResponse.successWithResult(productService.getOneProduct(id));
     }
 
     @GetMapping("/products")
+    @PreAuthorize("hasRole('user')")
     public ApiResponse<List<Product>> getProducts(@RequestParam(required = false, defaultValue = "0") Integer page,
                                                   @RequestParam(required = false) String sort,
                                                   @RequestParam(required = false, defaultValue = "20") Integer limit,
@@ -70,6 +74,7 @@ public class ProductController {
     }
 
     @GetMapping("products/in_store")
+    @PreAuthorize("hasRole('user')")
     public ApiResponse<List<Product>> getInStoreProducts(@RequestParam(required = false, defaultValue = "0") Integer page,
                                                          @RequestParam(required = false) String sort,
                                                          @RequestParam(required = false, defaultValue = "20") Integer limit) {
@@ -77,17 +82,20 @@ public class ProductController {
     }
 
     @PutMapping("products/move")
+    @PreAuthorize("hasRole('user')")
     public ApiResponse<MoveToStoreResponse> moveToStore(@RequestBody List<MoveToStoreRequest> requests) {
         return ApiResponse.successWithResult(productService.moveProductToStore(requests));
     }
 
     @PutMapping(path = "products/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('user')")
     public ApiResponse<Product> updateProduct(@PathVariable Long id,
                                               @ModelAttribute UpdateProductRequest request) throws IOException, ApiException {
         return ApiResponse.successWithResult(productService.updateProduct(id, request));
     }
 
     @DeleteMapping("products/{id}")
+    @PreAuthorize("hasRole('user')")
     public ApiResponse<Long> deleteProduct(@PathVariable Long id) throws ApiException {
         return ApiResponse.successWithResult(productService.deleteProduct(id));
     }
