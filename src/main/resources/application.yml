@@ -7,10 +7,10 @@ spring:
   cloud:
     stream:
       bindings:
-        input:
+        orderEventHandler-in-0:
           destination: productTopic
           content-type: application/json
-          group: product-listener
+          group: order-listener
       kafka:
         binder:
           brokers: localhost
